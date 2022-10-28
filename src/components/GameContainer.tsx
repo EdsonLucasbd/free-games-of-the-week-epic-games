@@ -11,7 +11,12 @@ interface Game {
 }
 
 export function GameContainer({ expiration, image, link, name }: Game) {
-  const forNextWeek = expiration === 'Em Breve' && 'opacity-20'
+  let forNextWeek, nextExpiration
+  if (expiration === 'Em Breve') {
+    forNextWeek = 'opacity-20'
+    nextExpiration = `A partir de ${expiration}`
+  }
+
   return (
     <div className='flex flex-col w-[17rem] max-w-[17.053rem]'>
       <Link href={link}>

@@ -4,6 +4,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { GameContainer, LoadingTemplates } from '../src/components/GameContainer'
+import { ErrorOnLoad } from '../src/components/Error'
 
 interface Game {
   image: string,
@@ -24,6 +25,12 @@ const Home: NextPage = () => {
       .then((data) => {
         setGames(data)
         setIsLoading(false)
+        console.log('resultado: ', data)
+      })
+      .catch((err) => {
+        setGames(undefined)
+        setIsLoading(false)
+        console.error(err)
       })
   }, [])
 
@@ -41,15 +48,21 @@ const Home: NextPage = () => {
           {isLoading
             ? <LoadingTemplates />
             : (
-              games!.map((game, index) => {
-                return <GameContainer
-                  key={index}
-                  expiration={game.expiration}
-                  image={game.image}
-                  link={game.link}
-                  name={game.name}
-                />
-              })
+              games !== undefined
+                ? (
+                  games!.map((game, index) => {
+                    return <GameContainer
+                      key={index}
+                      expiration={game.expiration}
+                      image={game.image}
+                      link={game.link}
+                      name={game.name}
+                    />
+                  })
+                )
+                : (
+                  <ErrorOnLoad />
+                )
             )
           }
         </div>
