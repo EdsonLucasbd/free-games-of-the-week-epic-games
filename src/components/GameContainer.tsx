@@ -7,32 +7,49 @@ interface Game {
   name: string,
   expiration: string,
   link: string,
-  loading?: boolean
+  loading?: boolean,
 }
 
 export function GameContainer({ expiration, image, link, name }: Game) {
-  let forNextWeek, nextExpiration
+  let forNextWeek, expirationText, nameTextColor
+
   if (expiration === 'Em Breve') {
-    forNextWeek = 'opacity-20'
-    nextExpiration = `A partir de ${expiration}`
+    forNextWeek = 'opacity-20',
+      nameTextColor = 'text-zinc-400',
+      expirationText = 'bg-zinc-700 rounded w-fit px-2 text-zinc-200'
+  } else {
+    expiration = `Gratuito até ${expiration.slice(19)}`,
+      nameTextColor = 'text-white',
+      expirationText = 'py-2 sm:py-0 bg-purple-700 rounded w-fit px-2 text-zinc-300'
   }
 
   return (
-    <div className='flex flex-col w-[17rem] max-w-[17.053rem]'>
+    <div className='group flex flex-col w-[17rem] max-w-[17.053rem] keen-slider__slide'>
       <Link href={link}>
-        <a className='hover:scale-105 ease-in-out duration-300'>
-          <Image src={image} className={`rounded-md ${forNextWeek}`} width="272.848px" height="363.808px" />
+        <a
+          className='group-hover:scale-105 ease-in-out duration-300'
+          aria-label={`Acessar a página do jogo ${name}`}
+        >
+          <Image
+            src={image}
+            className={`rounded-md ${forNextWeek}`}
+            width="272.848px"
+            height="363.808px"
+            aria-hidden="true"
+          />
         </a>
       </Link>
-      <p className='my-4'>{name}</p>
-      <p className='text-sm'>{expiration}</p>
+      <div className={`rounded px-2 py-2 mt-2 group-hover:scale-105 ease-in-out duration-300`}>
+        <p className={`text-sm sm:text-lg font-[Ubuntu] ${nameTextColor}`}>{name}</p>
+        <p className={`text-xs mt-1 sm:mt-0 sm:text-sm font-[Ubuntu] ${expirationText}`}>{expiration}</p>
+      </div>
     </div>
   )
 }
 
 export function LoadingTemplates() {
   const GameLoading = (
-    <div className="animate-pulse flex flex-col gap-4">
+    <div className="animate-pulse flex flex-col gap-4 keen-slider__slide">
       <div className="flex-1 w-[17.053rem]">
         <div className="h-[22.7rem] bg-slate-700 rounded"></div>
       </div>

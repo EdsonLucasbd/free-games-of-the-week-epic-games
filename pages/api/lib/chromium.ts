@@ -26,21 +26,41 @@ export async function searchGame(isDev: boolean) {
       waitUntil: 'networkidle0'
     })
 
-    const name = await page.$eval('.css-1p6kk8h', (element: HTMLSpanElement) => element.innerHTML)
-
-    let expiration
-
-    if ((await page.$('.css-1146xy9 > .css-iqno47 > span')) !== null) {
-      expiration = await page.$eval('.css-1146xy9 > .css-iqno47 > span', (element: HTMLSpanElement) => element.innerHTML)
+    let name
+    if ((await page.$('.css-1p6kk8h')) !== null) {
+      name = await page.$eval('.css-1p6kk8h', (element: HTMLSpanElement) => element.innerHTML)
+    } else if ((await page.$('.css-j00jcq')) !== null) {
+      name = await page.$eval('.css-j00jcq', (element: HTMLSpanElement) => element.innerHTML)
     } else {
-      expiration = 'Em Breve'
+      name = '...'
     }
+
+    const checkIsFreeNow = async (): Promise<string> => {
+      let buttonText = 'none', expiration = 'none'
+      if ((await page.$("[data-testid='purchase-cta-button']  span span") !== null)) {
+        buttonText = await page.$eval("[data-testid='purchase-cta-button']  span span", (element: HTMLSpanElement) => element.innerHTML)
+      }
+
+      if (buttonText === "Compre agora" || buttonText === "Em breve") {
+        return expiration = 'Em Breve'
+      }
+
+      if ((await page.$('.css-1146xy9 > .css-iqno47 > span')) !== null) {
+        expiration = await page.$eval('.css-1146xy9 > .css-iqno47 > span', (element: HTMLSpanElement) => element.innerHTML)
+      } else if ((await page.$('.css-1146xy9 > .css-1j3k4tr > span')) !== null) {
+        expiration = await page.$eval('.css-1146xy9 > .css-1j3k4tr > span', (element: HTMLSpanElement) => element.innerHTML)
+      }
+
+      return expiration
+    }
+
+    let gameExpiration = await checkIsFreeNow()
 
     const link = page.url()
 
     gameData['image'] = allFreeGamesImage[index]
     gameData['name'] = name
-    gameData['expiration'] = expiration
+    gameData['expiration'] = gameExpiration
     gameData['link'] = link
 
     gamesList.push(gameData)
