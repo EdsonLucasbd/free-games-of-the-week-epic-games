@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@heroicons/react": "^2.0.12",
     "@radix-ui/react-slot": "^1.0.1",
     "chrome-aws-lambda": "^10.1.0",
     "keen-slider": "^6.8.3",
@@ -17,7 +16,6 @@
     "puppeteer": "^19.0.0",
     "puppeteer-core": "^19.0.0",
     "puppeteer-extra": "^3.3.4",
-    "puppeteer-extra-plugin-adblocker": "^2.13.5",
     "puppeteer-extra-plugin-stealth": "^2.11.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
