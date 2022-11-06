@@ -9,7 +9,8 @@ interface Game {
   image: string,
   name: string,
   expiration: string,
-  link: string
+  link: string,
+  status: string
 }
 
 const Home: NextPage = () => {
@@ -68,8 +69,8 @@ const Home: NextPage = () => {
                       key={index}
                       expiration={game.expiration}
                       image={game.image}
-                      link={game.link}
                       name={game.name}
+                      status={game.status}
                     />
                   })
                 )
