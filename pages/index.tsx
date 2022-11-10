@@ -4,13 +4,16 @@ import Head from 'next/head'
 import { useKeenSlider } from "keen-slider/react"
 import { GameContainer, LoadingTemplates } from '../src/components/GameContainer'
 import { ErrorOnLoad } from '../src/components/Error'
+import { Button } from '../src/components/Button'
 
 interface Game {
   image: string,
   name: string,
   expiration: string,
   link: string,
-  status: string
+  status: string,
+  description: string,
+  index: number,
 }
 
 const Home: NextPage = () => {
@@ -49,12 +52,12 @@ const Home: NextPage = () => {
   }, [])
 
   return (
-    <div className='flex flex-col h-full'>
+    <div className='flex flex-col h-screen relative'>
       <Head>
         <title>Free Game Search</title>
       </Head>
-      <main className='flex flex-col flex-1 items-center justify-center gap-16'>
-        <h1 className='flex flex-col mt-6 gap-1 items-center justify-center'>
+      <main className='flex flex-col mt-24 sm:mt-6 items-center justify-center gap-10'>
+        <h1 className='flex flex-col gap-1 items-center justify-center'>
           <img src="/epic_logo.svg" aria-hidden='true' />
           <p className='text-3xl'>Veja os jogos gratuitos da semana</p>
         </h1>
@@ -71,6 +74,8 @@ const Home: NextPage = () => {
                       image={game.image}
                       name={game.name}
                       status={game.status}
+                      description={game.description}
+                      index={index}
                     />
                   })
                 )
@@ -80,8 +85,11 @@ const Home: NextPage = () => {
             )
           }
         </div>
+        <Button className='bg-purple-700 relative mt-2 p-4 rounded-md hover:bg-purple-600 transition-colors duration-300' asChild>
+          <a href='https://store.epicgames.com/pt-BR/free-games' aria-label='ver mais jogos na página oficial da epic games.' rel='noopener noreferrer' target="_blank">Ir para a página oficial</a>
+        </Button>
       </main>
-      <footer className='group flex flex-row items-center justify-center absolute w-full py-4 bottom-0 border-t-2 border-zinc-800'>
+      <footer className='group flex flex-row items-center justify-center absolute w-full h-10 py-4 bottom-0 bg-[#191622] border-t-2 border-b-2 border-zinc-800'>
         <p className='font-[Ubuntu] text-zinc-300'>
           Feito com 💜
           por <a aria-label='ir para o meu perfil no github' className='group-hover:text-purple-400 ease-linear duration-300' href="https://github.com/EdsonLucasbd">Lucas</a>

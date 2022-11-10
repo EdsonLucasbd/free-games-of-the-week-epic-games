@@ -21,6 +21,10 @@ a {
   box-sizing: border-box;
 }
 
+.switch:checked ~ .cardContainer .card {
+  transform: rotateY(180deg);
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

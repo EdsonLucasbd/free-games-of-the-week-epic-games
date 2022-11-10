@@ -3,7 +3,7 @@ import moment from "moment";
 
 export async function requestGames() {
   const gamesList: Record<string, string | Promise<string>>[] = []
-  await getGames().then(res => {
+  await getGames("BR").then(res => {
     const { currentGames, nextGames } = res;
 
     currentGames.forEach(game => {
@@ -16,7 +16,7 @@ export async function requestGames() {
       gameData['name'] = game.title;
       gameData['image'] = image[0].url;
       gameData['expiration'] = expiration;
-      // gameData['link'] = `https://store.epicgames.com/pt-BR/p/${slug}`;
+      gameData['description'] = game.description;
       gameData['status'] = 'active';
 
       gamesList.push(gameData)
@@ -30,7 +30,7 @@ export async function requestGames() {
       gameData['name'] = game.title;
       gameData['image'] = image[0].url;
       gameData['expiration'] = '00/00/0000';
-      // gameData['link'] = `https://store.epicgames.com/pt-BR/p/${slug}`;
+      gameData['description'] = game.description;
       gameData['status'] = 'disabled';
 
       gamesList.push(gameData)
